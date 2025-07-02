@@ -220,12 +220,7 @@ void ServerManager_::setupWebServer(IPAddress ip) {
                 request->send(400, "application/json", "{\"status\": \"power key not found\"}");
             }
         }));
-// Neuer Glukose-Endpunkt:
-ws->on("/api/glucose", HTTP_GET, [](AsyncWebServerRequest* request) {
-    char buf[32];
-    snprintf(buf, sizeof(buf), "{\"sgv\": %d}", App.data.sgv); // Zugriff auf SGV-Wert
-    request->send(200, "application/json", buf);
-});
+
     ws->on("/api/factory-reset", HTTP_POST, [](AsyncWebServerRequest* request) {
         request->send(200, "application/json", "{\"status\": \"ok\"}");
         delay(200);
