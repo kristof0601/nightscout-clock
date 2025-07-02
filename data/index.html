@@ -24,6 +24,24 @@
                     Loading data...
                 </div>
             </div>
+            <div id="sgvDisplay" style="font-size: 2em; color: green;">
+                Lade Glukosewert ...
+            </div>
+
+            <script>
+                async function fetchSGV() {
+                    try {
+                        const res = await fetch('/api/glucose');
+                        const data = await res.json();
+                        document.getElementById('sgvDisplay').innerText = 'Aktueller Glukosewert: ' + data.sgv;
+                    } catch (e) {
+                        document.getElementById('sgvDisplay').innerText = 'Fehler beim Laden des Werts';
+                    }
+                }
+
+                fetchSGV(); // direkt nach dem Laden
+                setInterval(fetchSGV, 60000); // alle 60 Sekunden aktualisieren
+            </script>
             <div class="collapse" id="main_block">
                 <div class="card" id="wifi_setup_card">
                     <h5 class="card-header" id="headingOne">
@@ -631,7 +649,8 @@
                         </div>
                         <div class="row d-none" id="custom_nodatatimer_settings">
                             <div class="col-6" id="custom_nodatatimer_cell">
-                                <label for="custom_nodatatimer" class="form-label">Custom No Data Timer (in minutes)</label>
+                                <label for="custom_nodatatimer" class="form-label">Custom No Data Timer (in
+                                    minutes)</label>
                                 <input type="text" class="form-control" id="custom_nodatatimer" placeholder="" required>
                                 <div class="invalid-feedback">
                                     A valid time between 6 and 60 minutes is required
